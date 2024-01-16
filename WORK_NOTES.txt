@@ -1,0 +1,27 @@
+*messages will be sent as text object*
+
+need to consider adding the packet header to each
+
+LOG
+
+FUNC
+
+QUIT- if client wants to quit session, must send QUIT header. server wont respond, just quits. if client sends wrong info, server will send QUIT header, with error message. Message will display, and server will send QUIT header to server in similar fashion to server, where connection will quit
+
+
+NEW idea: no headers because that prevents "sending errors". instead, we ensure the client gets the full message by sending it with a special symbol like $ at the end that ensures that we dont consider a new packet to be a new message until we recieve the $.
+
+ideas: once login successful, we move active socket from "not logged in" list to "logged in" list
+
+
+client: will basically run a while(true) loop with a stdin function at the top, that will send messages
+
+NOTES FOR NEXT MEETING:
+-understand how to use select (does only the server need it, or the client at well?) (also do we need a write list? just a read list?)
+- 
+
+our protocol will force that the first message must be in the format of:
+4-bytes<message>
+where the first 4 bytes are to be read together as the byte count for the message, and the rest will be the message in its entirety. this way we ensure we get the full message.
+
+
