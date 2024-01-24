@@ -24,7 +24,16 @@ our protocol will force that the first message must be in the format of:
 4-bytes<message>
 where the first 4 bytes are to be read together as the byte count for the message, and the rest will be the message in its entirety. this way we ensure we get the full message.
 
+
+24/1/24
+
 ****If we have time, add pack and unpack****
+todo next time:
+error handling
+
+header care (adding them and removing)
+
+encode and decode utf-8
 
 
 
