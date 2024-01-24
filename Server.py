@@ -6,6 +6,50 @@ listeningSocket.bind(('', port)) # Ip\Port
 listeningSocket.listen(5) # become a server socket
 (conn_sock, address) = listeningSocket.accept() # become a server socket
 
+
+
+
+### packet decoding, assumes packet is full message and not partial###
+def login_parser(user_packet, password_packet):
+    
+    if user_packet[:6] == "User: ":
+        username = user_packet[6:]
+    else:
+        raise Exception("Send username in correct format")
+    
+    if password_packet[:10] == "Password: ":
+        password = user_packet[10:]
+    else:
+        raise Exception("Send password in correct format")
+    
+    return login_checker(username, password)
+
+### compares input password and username, assumes file is open ###    
+def login_checker(username, password, pass_file):
+    pass_file.seek(0) #restart from the top
+    for line in pass_file:
+        if line[:len(username)] == username:
+            if line[len(username)+1 : -1] == password: #ignores newline, username and the separating tab
+                return True
+    return False        
+        
+
+# def function_parser(packet):
+#     ### switch cases for header ##
+#     try:
+#         if packet[:11] == "calculate: ":
+#             response = calculate(packet[11:])
+#         elif packet[:15] == "is_palindrome: ":
+#             response = is_palindrome(packet[15:])
+#         elif packet[:12] == "is_primary: ":
+#             response = is_primary(packet[12:])
+#         else:
+#             raise Exception("Send password in correct format")
+#     except:
+        
+#     return f"response: {response}"
+    
+
 ### We assume that str is the message without the header ###
 def calculate(str):
     #find the operator
@@ -50,5 +94,5 @@ def is_primary(str):
     
     for i in range(2,int(num**0.5)+1):
         if num%i == 0:
-            return False
-    return True
+            return "No"
+    return "Yes"
